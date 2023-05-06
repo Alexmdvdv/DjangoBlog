@@ -1,0 +1,41 @@
+{% extends 'Blog/base.html' %}
+
+{% block content %}
+{% for p in found %}
+<div class="card mb-4">
+    <a href="{{ p.get_absolute_url }}"><img class="card-img-top" src="{{p.photo.url}}" alt="..."/></a>
+    <div class="card-body">
+        <div class="small text-muted">{{p.time_create}}</div>
+        <h2 class="card-title">{{p.title}}</h2>
+        <p>{{p.content|truncatewords:50}}</p>
+        <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Подробнее →</a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+
+{% block cats %}
+<div class="card mb-4">
+    {% if cat_selected == 0 %}
+    <div class="card-header">Все категории</div>
+    {% else %}
+    <div class="card-header"><a href="{% url 'home' %}">Все категориии</a></div>
+    {% endif %}
+    <div class="card-body">
+        <div class="row">
+            <ul class="list-unstyled mb-0">
+                {% for category in categories %}
+                {% if category.slug == cat_selected %}
+                <li><a type="button" class="btn btn-primary">{{category.name}}</a></li>
+                {% else %}
+                <li><a href="{{ category.get_absolute_url }}" type="button" class="btn btn-outline-primary">{{category.name}}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
